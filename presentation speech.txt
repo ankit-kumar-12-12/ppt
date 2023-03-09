@@ -1,0 +1,65 @@
+Today I am here to talk about a presentation on a service that consists of three sub-services: File Generator, Output Processor, and Report Generator.
+
+Firstly, let's discuss the File Generator sub-service. This sub-service queries the database to fetch results and creates files for those results. Once the files are created, they are then transferred to the configured location using FTP. After the files have been transferred, the File Generator sub-service will terminate.
+
+Moving on to the Output Processor sub-service, this service is always running and continuously polls the configured location for new files. Once new files are detected, the Output Processor sub-service reads the data from these files and stores it in the Tradereconresults in the AXIALEU database
+
+Lastly, we have the Report Generator sub-service. This sub-service waits for entries in the Tradereconresults in the AXIALEU database. Once an entry is received, the Report Generator sub-service mails the results to the specified email address. In email we got the information about how many there were matches, how many of them are singletons and how many records have break
+
+Overall, this service is a vital part of the AXIALEU database, and the services work together to ensure that the results are efficiently processed and reconciliation work done properly or not.
+
+All these services are running through Autosysjobs 
+
+----------------------------------------------------------------------------------------------------------------------------------------
+
+So currently all our services are running on VMs and as we all know we are migrating from Non-NPC to NPC and running these services in containers would be really great 
+
+And for running our services in container we are using Docker that helps in deploying and running of our services in containers A container is a lightweight and portable executable package that contains an application and all its dependencies. By using this we can deploy them across different environments, such as development, testing, and production, without worrying about the underlying infrastructure. 
+Additionally, Docker provides a layer of abstraction between the application and the underlying infrastructure, making it easier to manage and scale applications. 
+
+----------------------------------------------------------------------------------------------------------------------------------------
+the steps I am taking to develop a Docker image for our application. By following these steps, we will be able to deploy our application in a containerized environment and take advantage of the benefits that Docker offers.
+
+Firstly, I am configuring environment variables that will be used in our application, such and uploading frame of environment variables in the propstore
+
+Secondly, developing the Dockerfile. The Dockerfile is a script that defines the steps to build a Docker image. We will be discussing in detail in next slide It contains instructions for installing software packages, copying files, and setting up the environment for the application. The Dockerfile also specifies the base image that the application will run on top of. 
+
+Thirdly, for building the Docker image we are using a Jenkins pipeline. 
+
+Fourthly, I am running containers in different environments, such as development, testing, and production. Containers are isolated from the underlying infrastructure, which makes it easier to manage and deploy applications across different environments.
+
+for now on we are just checking for the ftp way but for the future scope we will integrating it with AxialEOD REST API for all our uploading and downloading of files 
+
+
+----------------------------------------------------------------------------------------------------------------------------------------
+
+Dockerfile is a script that defines the steps to build a Docker image. The Dockerfile contains instructions for installing software packages, copying files, setting up the environment, and configuring the application to run inside the container. The Dockerfile is built layer by layer, with each layer representing a step in the build process.
+
+FROM: specifies the base image that the Dockerfile will use. The base image is the starting point for building the image. here we are using zulu which is openjdk by Azul
+
+ARG: defines a build-time argument
+
+WORKDIR: sets the working directory for subsequent instructions in the Dockerfile.  
+
+RUN: executes a command inside the container during the build process.  for ex. here we are making directories for aplications.
+
+COPY: copies files from the host machine to the container during the build process. 
+
+ENV: sets environment variables inside the container during the build process. 
+
+VOLUME: creates a mount point for external storage in the container. 
+
+ENTRYPOINT: specifies the command to run when the container starts.
+
+Each instruction in the Dockerfile creates a new layer in the image. When a change is made to a layer, only that layer and the subsequent layers need to be rebuilt, which makes the build process faster and more efficient.
+
+----------------------------------------------------------------------------------------------------------------------------------------
+
+Docker volume is a way to store persistent data outside of the container's filesystem. Volumes are used to share data between containers, to store application data that needs to persist across container restarts, and to separate data from the container's filesystem, making it easier to manage
+
+
+
+
+
+
+
