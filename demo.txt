@@ -1,0 +1,20 @@
+kushdfgsufgoiusfd
+lsidfh
+
+
+
+import org.apache.commons.collections4.MultiValueMap;
+import org.apache.commons.collections4.multimap.ArrayListValuedHashMap;
+
+public class MultiValueMapExample {
+    public static void main(String[] args) {
+        MultiValueMap<String, Object> mp = new ArrayListValuedHashMap<>();
+        
+        mp.put("key1", "value1");
+        mp.put("key1", "value2");
+        mp.put("key2", "value3");
+        
+        System.out.println(mp.get("key1"));  // Output: [value1, value2]
+        System.out.println(mp.get("key2"));  // Output: [value3]
+    }
+}
